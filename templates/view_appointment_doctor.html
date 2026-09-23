@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+Appointment - Doctor
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2 class="text-primary">
+            Patient Appointment
+        </h2>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn btn-secondary"
+        >
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="card p-4 mb-4">
+
+        <h4 class="mb-4">
+            Patient Information
+        </h4>
+
+        <p>
+            <strong>Name:</strong>
+            {{ appointment['patient_name'] }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ appointment['patient_email'] }}
+        </p>
+
+        <p>
+            <strong>Appointment Date:</strong>
+            {{ appointment['appointment_date'] }}
+        </p>
+
+        <p>
+            <strong>Appointment Time:</strong>
+            {{ appointment['appointment_time'] }}
+        </p>
+
+        <p>
+            <strong>Symptoms:</strong>
+            {{ appointment['symptoms'] }}
+        </p>
+
+    </div>
+
+
+    <div class="card p-4">
+
+        <h4 class="text-primary mb-4">
+            Submit Diagnosis
+        </h4>
+
+        <form
+            method="POST"
+            action="{{ url_for(
+                'submit_diagnosis',
+                appointment_id=appointment['appointment_id']
+            ) }}"
+        >
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Diagnosis
+                </label>
+
+                <textarea
+                    name="diagnosis"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Enter diagnosis..."
+                    required
+                >{{ appointment['diagnosis'] or '' }}</textarea>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Treatment Plan
+                </label>
+
+                <textarea
+                    name="treatment_plan"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Enter treatment plan..."
+                >{{ appointment['treatment_plan'] or '' }}</textarea>
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Prescription
+                </label>
+
+                <textarea
+                    name="prescription"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Enter prescription..."
+                >{{ appointment['prescription'] or '' }}</textarea>
+
+            </div>
+
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Follow-up Instructions
+                </label>
+
+                <textarea
+                    name="follow_up"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Enter follow-up instructions..."
+                >{{ appointment['follow_up'] or '' }}</textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-success w-100"
+            >
+                Submit Diagnosis
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

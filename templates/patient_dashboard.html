@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}
+Patient Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="text-primary">
+                Patient Dashboard
+            </h2>
+
+            <p class="text-muted">
+                Welcome, {{ session.get('name') }}
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('book_appointment') }}"
+            class="btn btn-primary"
+        >
+            + Book Appointment
+        </a>
+
+    </div>
+
+
+    <div class="card p-4 mb-4">
+
+        <h4>
+            Search Appointments
+        </h4>
+
+        <form
+            method="GET"
+            action="{{ url_for('search_appointments') }}"
+            class="d-flex mt-3"
+        >
+
+            <input
+                type="text"
+                name="search"
+                class="form-control me-2"
+                placeholder="Search by doctor, date or status"
+            >
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card p-4">
+
+        <h4 class="mb-4">
+            My Appointments
+        </h4>
+
+        {% if appointments %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-primary">
+
+                        <tr>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Symptoms</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for appointment in appointments %}
+
+                        <tr>
+
+                            <td>
+                                Dr. {{ appointment['doctor_name'] }}
+                            </td>
+
+                            <td>
+                                {{ appointment['appointment_date'] }}
+                            </td>
+
+                            <td>
+                                {{ appointment['appointment_time'] }}
+                            </td>
+
+                            <td>
+                                {{ appointment['symptoms'] }}
+                            </td>
+
+                            <td>
+
+                                {% if appointment['status'] == 'completed' %}
+
+                                    <span class="badge bg-success">
+                                        Completed
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        {{ appointment['status']|capitalize }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <a
+                                    href="{{ url_for(
+                                        'view_appointment',
+                                        appointment_id=appointment['appointment_id']
+                                    ) }}"
+                                    class="btn btn-sm btn-outline-primary"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>
+                    No appointments found
+                </h5>
+
+                <p class="text-muted">
+                    You haven't booked any appointments yet.
+                </p>
+
+                <a
+                    href="{{ url_for('book_appointment') }}"
+                    class="btn btn-primary"
+                >
+                    Book Your First Appointment
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

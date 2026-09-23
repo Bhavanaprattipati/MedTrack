@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card p-4">
+
+                <h2 class="text-primary mb-4">
+                    My Profile
+                </h2>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('profile') }}"
+                >
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control"
+                            value="{{ user['email'] }}"
+                            disabled
+                        >
+
+                        <small class="text-muted">
+                            Email cannot be changed.
+                        </small>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            value="{{ user['name'] or '' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            name="age"
+                            class="form-control"
+                            value="{{ user['age'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            value="{{ user['phone'] or '' }}"
+                            placeholder="Enter phone number"
+                        >
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Role
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            value="{{ user['role']|capitalize }}"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Medical History
+                        </label>
+
+                        <textarea
+                            name="medical_history"
+                            class="form-control"
+                            rows="5"
+                            placeholder="Enter medical history"
+                        >{{ user['medical_history'] or '' }}</textarea>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <a
+                            href="{{ url_for('dashboard') }}"
+                            class="btn btn-secondary"
+                        >
+                            Back
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Update Profile
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
